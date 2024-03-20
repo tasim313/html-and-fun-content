@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shortcut Feature</title>
+</head>
+<body>
+    <textarea id="shortcutTextarea" rows="4" cols="50" placeholder="Type here..."></textarea><br><br>
+    <input type="text" id="shortcutInput" placeholder="Type here..."><br><br>
+
+    <script>
+        // Define your shortcuts and their corresponding values
+        const shortcuts = {
+            "ilc": "I Love you ChatGPT",
+            "n" : "Sahariyar Nazim"
+            // Add more shortcuts as needed
+        };
+
+        // Function to replace shortcut with corresponding value
+        function handleShortcutInput(inputElement) {
+            let inputValue = inputElement.value.toLowerCase();
+            for (let shortcut in shortcuts) {
+                if (inputValue.includes(shortcut)) {
+                    inputElement.value = inputValue.replace(shortcut, shortcuts[shortcut]);
+                    break; // Stop after first match
+                }
+            }
+        }
+
+        // Event listener for textarea
+        document.getElementById("shortcutTextarea").addEventListener("input", function() {
+            let textarea = this;
+            let cursorPosition = textarea.selectionStart;
+            for (let shortcut in shortcuts) {
+                if (textarea.value.includes(shortcut)) {
+                    textarea.value = textarea.value.replace(shortcut, shortcuts[shortcut]);
+                    // Maintain cursor position
+                    textarea.selectionEnd = cursorPosition + (shortcuts[shortcut].length - shortcut.length);
+                    break; // Stop after first match
+                }
+            }
+        });
+
+        // Event listener for input field
+        document.getElementById("shortcutInput").addEventListener("input", function() {
+            handleShortcutInput(this);
+        });
+    </script>
+</body>
+</html>
